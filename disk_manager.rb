@@ -4,21 +4,6 @@
 #
 require 'pp'
 
-disk_layout = { :project => 'oradb12-single',
-                :shareable => false,
-                :create => true,
-                :groups => [
-                            { :prefix => "ocr",
-                              :num    => 3,
-                              :size   => 3     },
-                            { :prefix => "disk",
-                              :num    => 5,
-                              :size   => 3
-                            }
-                           ]
-              }
-
-
 def create_asm_disks(config, vb, options)
 
 	# Options:
@@ -35,6 +20,14 @@ def create_asm_disks(config, vb, options)
 	project_name 	= options[:project] || "default_project"
 	create		= options[:create] || true
 	shareable	= options[:shareable] || false
+
+	puts "From create_asm_disks"
+	pp options
+	if create
+		puts "CREATE WAS TRUE"
+	else	
+		puts "CREATE WAS FALSE!!!"
+	end
 
 	diskport = 1
 	diskpath=`VBoxManage list systemproperties | grep "Default machine folder" | awk ' { print $4; } '`.chomp
@@ -55,7 +48,7 @@ def create_asm_disks(config, vb, options)
 			end
 
 			# If we were asked to create disk, and it's not already there...
-			if create && !File.exist?(disk.gsub /\\\\/, '\\')
+			if create && !File.exist?(disk.gsub /\\\\/, '\\') 
 				if shareable
 					variant='Fixed'
 				else
