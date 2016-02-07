@@ -21,14 +21,6 @@ def create_asm_disks(config, vb, options)
 	create		= options[:create] || true
 	shareable	= options[:shareable] || false
 
-	puts "From create_asm_disks"
-	pp options
-	if create
-		puts "CREATE WAS TRUE"
-	else	
-		puts "CREATE WAS FALSE!!!"
-	end
-
 	diskport = 1
 	diskpath=`VBoxManage list systemproperties | grep "Default machine folder" | awk ' { print $4; } '`.chomp
 
