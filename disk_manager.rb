@@ -4,7 +4,7 @@
 #
 require 'pp'
 
-def create_asm_disks(config, vb, options)
+def create_asm_disks(vb, options)
 
 	# Options:
 	# 		prefix => name to prepend to disk volume
@@ -18,8 +18,8 @@ def create_asm_disks(config, vb, options)
 	
 	# Load default values
 	project_name 	= options[:project] || "default_project"
-	create		= options[:create] || true
-	shareable	= options[:shareable] || false
+	create		= options[:create] 
+	shareable	= options[:shareable]
 
 	diskport = 1
 	diskpath=`VBoxManage list systemproperties | grep "Default machine folder" | awk ' { print $4; } '`.chomp
@@ -40,7 +40,7 @@ def create_asm_disks(config, vb, options)
 			end
 
 			# If we were asked to create disk, and it's not already there...
-			if create && !File.exist?(disk.gsub /\\\\/, '\\') 
+			if !File.exist?(disk.gsub /\\\\/, '\\') 
 				if shareable
 					variant='Fixed'
 				else
